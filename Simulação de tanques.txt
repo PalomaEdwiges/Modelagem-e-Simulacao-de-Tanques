@@ -1,0 +1,31 @@
+%Paloma Edwiges Frade Ferreira 
+
+%Código principal
+
+clc
+clear all
+close all
+global A V0 alfa
+
+%Variáveis
+A=20; %área superficial (m²)
+V0=5; %vazão inicial (m³)
+alfa=2; %coeficiente de descarga (m^2,5)
+tspan=[0 1000];
+H0=0; %condição inicial
+[time,H]=ode45('altura',tspan,H0);
+plot(time,H,'b-')
+title('Variação do nível de líquido no tanque em função do tempo')
+xlabel('Tempo (s)')
+ylabel('Altura (m)')
+fprintf('O nível do tanque quando o sistema atinge regime permanente é de = %.2f m',H(end));
+
+%criação da função altura
+
+function dHdt=altura(t,H)
+global A V0 alfa
+
+V=alfa*sqrt(H);
+dHdt=((V0-V)/A);
+end
+
